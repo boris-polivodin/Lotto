@@ -21,6 +21,10 @@ public class Toy {
         return weight;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return name + " { id= " + id + ", weight= " + weight + " }";

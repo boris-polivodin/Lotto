@@ -3,6 +3,8 @@ package presenter;
 
 import model.Toy;
 
+import java.util.LinkedList;
+
 public class LottePresenter implements ViewObserver{
 
     private final ToyModel model;
@@ -23,15 +25,27 @@ public class LottePresenter implements ViewObserver{
     }
 
     @Override
-    public void onLoadProducts() {;
+    public void onAddProducts() {
         for (int i = 0; i < count; i++) {
             String[] response = view.promptValue().split(" ");
             try {
                 model.addToy(response[0], Integer.parseInt(response[1]));
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e1) {
+                throw new RuntimeException("Не корректный формат введенных данных");
+            } catch (ArrayIndexOutOfBoundsException e2) {
                 throw new RuntimeException("Не корректный формат введенных данных");
             }
         }
-        view.showToys(model.loadProducts());
     }
+
+    @Override
+    public LinkedList<Toy> onLoadProducts() {;
+        return model.getProducts();
+    }
+
+    @Override
+    public void showProducts(LinkedList<Toy> toys) {
+        view.showToys(toys);
+    }
+
 }

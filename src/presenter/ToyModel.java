@@ -2,11 +2,11 @@ package presenter;
 
 import model.Toy;
 
-import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public interface ToyModel {
     void addToy(String name, int weight);
-    Collection<Toy> loadProducts();
-    void removeToy(Toy toy);
+    LinkedList<Toy> getProducts();
     Toy getToy();
 }

@@ -2,19 +2,17 @@ package model;
 
 import presenter.ToyModel;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.*;
 
 public class ToyQueue implements ToyModel {
 
-    Collection<Toy> toys;
+    Queue<Toy> toys;
+    LinkedList<Toy> products;
+    int total;
 
     public ToyQueue() {
-//        Comparator<Toy> toyWeightComparator
-//                = Comparator.comparing(Toy::getWeight);
         toys = new PriorityQueue<>(Comparator.comparingInt(Toy::getWeight));
+        products = new LinkedList<>();
     }
 
     @Override
@@ -28,30 +26,23 @@ public class ToyQueue implements ToyModel {
     }
 
     @Override
-    public Collection<Toy> loadProducts() {
-        return toys;
-    }
-
-    @Override
-    public void removeToy(Toy toy) {
-        try {
-            toys.remove(toy);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+    public LinkedList<Toy> getProducts() {
+        while (!toys.isEmpty()) {
+            products.add(toys.poll());
         }
+        for (Toy toy: products) {
+            total += toy.getWeight();
+        }
+        return products;
     }
 
     @Override
     public Toy getToy() {
-        int total = 0;
-        for (Toy toy: toys) {
-            total += toy.getWeight();
-        }
         Random rnd = new Random();
         int index = rnd.nextInt(1, total + 1);
         int comparisonValue = 0;
 
-        for (Toy toy: toys) {
+        for (Toy toy: products) {
             comparisonValue += toy.getWeight();
             if (index <= comparisonValue) {
                 return toy;

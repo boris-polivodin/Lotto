@@ -5,6 +5,8 @@ import presenter.View;
 import presenter.ViewObserver;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class ToysView implements View {
@@ -12,23 +14,8 @@ public class ToysView implements View {
     private ViewObserver observer;
 
     @Override
-    public void showToys(Collection<Toy> toys) {
+    public void showToys(LinkedList<Toy> toys) {
         toys.forEach(System.out::println);
-    }
-
-    @Override
-    public void showLoadToyResult() {
-        if (observer == null) {
-            observer.onLoadProducts();
-        }
-    }
-
-
-    @Override
-    public void getToy() {
-        if (observer == null) {
-            observer.onGetToy();
-        }
     }
 
     @Override
