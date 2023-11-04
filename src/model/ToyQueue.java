@@ -30,6 +30,7 @@ public class ToyQueue implements ToyModel {
         while (!toys.isEmpty()) {
             products.add(toys.poll());
         }
+        total = 0;
         for (Toy toy: products) {
             total += toy.getWeight();
         }
@@ -39,16 +40,18 @@ public class ToyQueue implements ToyModel {
     @Override
     public Toy getToy() {
         Random rnd = new Random();
-        int index = rnd.nextInt(1, total + 1);
-        int comparisonValue = 0;
-
-        for (Toy toy: products) {
-            comparisonValue += toy.getWeight();
-            if (index <= comparisonValue) {
-                return toy;
+        try {
+            int index = rnd.nextInt(1, total + 1);
+            int comparisonValue = 0;
+            for (Toy toy: products) {
+                comparisonValue += toy.getWeight();
+                if (index <= comparisonValue) {
+                    return toy;
+                }
             }
-
+            return null;
+        } catch (IllegalArgumentException e) {
+            return null;
         }
-        return null;
     }
 }

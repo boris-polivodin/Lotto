@@ -3,12 +3,17 @@ package presenter;
 
 import model.Toy;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class LottePresenter implements ViewObserver{
 
     private final ToyModel model;
     private final View view;
+
+    private StringBuilder sb = new StringBuilder();
 
     private int count;
 
@@ -21,7 +26,11 @@ public class LottePresenter implements ViewObserver{
 
     @Override
     public Toy onGetToy() {
-        return model.getToy();
+        Toy result = model.getToy();
+        if (result != null) {
+            sb.append(result).append("\n");
+        }
+        return result;
     }
 
     @Override
@@ -46,6 +55,18 @@ public class LottePresenter implements ViewObserver{
     @Override
     public void showProducts(LinkedList<Toy> toys) {
         view.showToys(toys);
+    }
+
+    public void writeFile(String name, String result) throws IOException {
+        if (sb.isEmpty())
+            throw new RuntimeException("Нет данных для записи в файл.");
+
+        sb.append(result);
+
+        try (FileWriter fw = new FileWriter(name, false)) {
+            fw.write(sb.toString());
+            fw.write("\n");
+        }
     }
 
 }
