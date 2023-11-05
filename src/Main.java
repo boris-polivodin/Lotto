@@ -13,7 +13,7 @@ public class Main {
         double count2 = 0;
         double count3 = 0;
         double count4 = 0;
-        int loopIterations = 100;
+        int loopIterations = 10;
         int countObjects = 3;
         String fileName = "result.txt";
 
